@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
 import Swiper from 'react-native-swiper';
+import { connect } from 'react-redux';
 
 import littleIcon from '../../../../media/temp/little.jpg';
 import maxiIcon from '../../../../media/temp/maxi.jpg';
@@ -8,7 +9,7 @@ import partyIcon from '../../../../media/temp/party.jpg';
 
 const { width, height } = Dimensions.get('window');
 
-export default class Category extends Component {
+class Category extends Component {
     gotoListProduct() {
         const { navigator } = this.props;
         navigator.push({ name: 'LIST_PRODUCT' });
@@ -22,21 +23,13 @@ export default class Category extends Component {
                 </View>
                 <View style={{ justifyContent: 'flex-end', flex: 4 }}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight} >
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={littleIcon} style={imageStyle}>
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={maxiIcon} style={imageStyle}>
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)}>
-                            <Image source={partyIcon} style={imageStyle}>
-                                <Text style={cateTitle}>Maxi Dress</Text>
-                            </Image>
-                        </TouchableOpacity>
+                        { this.props.arrProductType.map((e, i) => (
+                            <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
+                                <Image source={littleIcon} style={imageStyle}>
+                                    <Text style={cateTitle}>Maxi Dress</Text>
+                                </Image>
+                            </TouchableOpacity>
+                        ))}
                     </Swiper>
                 </View>
             </View>
@@ -44,6 +37,7 @@ export default class Category extends Component {
     }
 }
 //933 x 465
+
 const imageWidth = width - 40;
 const imageHeight = imageWidth / 2;
 
@@ -75,3 +69,9 @@ const styles = StyleSheet.create({
         color: '#9A9A9A'
     }
 });
+
+function mapStateToProps(state) {
+    return { arrProductType: state.arrProductType };
+}
+
+export default connect(mapStateToProps)(Category);
