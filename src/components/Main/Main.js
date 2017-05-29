@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 // import { View, Text, TouchableOpacity } from 'react-native';
 import Drawer from 'react-native-drawer';
+import { connect } from 'react-redux';
 
+import { initProductType } from '../../redux/action';
 import Menu from './Menu';
 import Shop from './Shop/Shop';
 
-export default class Main extends Component {
+class Main extends Component {
+    componentDidMount() {
+        this.props.dispatch({
+            type: 'INIT_PRODUCT_TYPE',
+            arrayType: [1, 3, 4]
+        });
+    }
+
     closeControlPanel = () => {
         this.drawer.close();
-    };
+    }
+
     openControlPanel = () => {
         this.drawer.open();
-    };
+    }
 
     render() {
         const { navigator } = this.props;
@@ -27,3 +37,9 @@ export default class Main extends Component {
         );
     }
 }
+
+function mapActionToProps() {
+    return { initProductType };
+}
+
+export default connect()(Main);
