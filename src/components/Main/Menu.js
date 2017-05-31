@@ -3,14 +3,12 @@ import {
     View, Text,
     TouchableOpacity, StyleSheet, Image
 } from 'react-native';
+import { connect } from 'react-redux';
+
 
 import profileIcon from '../../media/temp/profile.png';
 
 class Menu extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { isLogedIn: true };
-    }
     gotoAuthentication() {
         const { navigator } = this.props;
         navigator.push({ name: 'AUTHENTICATION' });
@@ -53,7 +51,7 @@ class Menu extends Component {
                 <View />
             </View>
         );
-        const mainJSX = this.state.isLogedIn ? loginJSX : logoutJSX;
+        const mainJSX = this.props.user ? loginJSX : logoutJSX;
         return (
             <View style={container}>
                 <Image source={profileIcon} style={profile} />
@@ -115,4 +113,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Menu;
+function mapStateToProps(state) {
+    return { user: state.user };
+}
+
+export default connect(mapStateToProps)(Menu);

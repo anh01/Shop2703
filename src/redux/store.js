@@ -15,9 +15,16 @@ const arrTopProductReducer = (state = [], action) => {
     return state;
 };
 
+const userReducer = (state = {}, action) => {
+    if (action.type === 'LOG_IN') return action.user;
+    if (action.type === 'LOG_OUT') return null;
+    return state;
+};
+
 const reducer = combineReducers({
     arrProductType: arrProductTypeReducer,
-    arrTopProduct: arrTopProductReducer
+    arrTopProduct: arrTopProductReducer,
+    user: userReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

@@ -7,7 +7,8 @@ import littleIcon from '../../../../media/temp/little.jpg';
 import maxiIcon from '../../../../media/temp/maxi.jpg';
 import partyIcon from '../../../../media/temp/party.jpg';
 
-const { width, height } = Dimensions.get('window');
+const { width } = Dimensions.get('window');
+const prefix = 'http://localhost:3000/images/type/';
 
 class Category extends Component {
     gotoListProduct() {
@@ -23,13 +24,13 @@ class Category extends Component {
             return (
                 arrProductType.map((e, i) => (
                     <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
-                        <Image source={littleIcon} style={imageStyle}>
+                        <Image source={{ uri: `${prefix}${e.image}` }} style={imageStyle}>
                             <Text style={cateTitle}>{e.name}</Text>
                         </Image>
                     </TouchableOpacity>
                 ))
             );
-        }
+        };
 
         return (
             <View style={wrapper}>
