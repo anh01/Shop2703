@@ -1,3 +1,5 @@
+import getInitData from '../api/getInitData';
+
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
     arrayType: arrProductType
@@ -13,3 +15,10 @@ const actionAddProducType = dispatch => {
 };
 
 export const addProductType = () => actionAddProducType;
+
+const initCategoryAction = dispatch => {
+    getInitData()
+    .then(arrCate => dispatch({ type: 'INIT_PRODUCT_TYPE', arrayType: arrCate }));
+};
+
+export const getInitCategory = () => initCategoryAction;

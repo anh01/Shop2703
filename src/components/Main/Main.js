@@ -3,14 +3,13 @@ import React, { Component } from 'react';
 import Drawer from 'react-native-drawer';
 import { connect } from 'react-redux';
 
-import { initProductType, addProductType } from '../../redux/action';
+import { getInitCategory } from '../../redux/action';
 import Menu from './Menu';
 import Shop from './Shop/Shop';
 
 class Main extends Component {
     componentDidMount() {
-        this.props.initProductType([1, 2, 3]);
-        this.props.addProductType();
+        this.props.getInitCategory();
     }
 
     closeControlPanel = () => {
@@ -36,4 +35,4 @@ class Main extends Component {
     }
 }
 
-export default connect(undefined, { initProductType, addProductType })(Main);
+export default connect(undefined, { getInitCategory })(Main);

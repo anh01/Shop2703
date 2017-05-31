@@ -26,7 +26,7 @@ class Category extends Component {
                         { this.props.arrProductType.map((e, i) => (
                             <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
                                 <Image source={littleIcon} style={imageStyle}>
-                                    <Text style={cateTitle}>Maxi Dress</Text>
+                                    <Text style={cateTitle}>{e.name}</Text>
                                 </Image>
                             </TouchableOpacity>
                         ))}
