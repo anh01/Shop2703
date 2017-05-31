@@ -1,4 +1,5 @@
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
 
 const arrProductTypeReducer = (state = [], action) => {
     if (action.type === 'INIT_PRODUCT_TYPE') {
@@ -19,6 +20,6 @@ const reducer = combineReducers({
     arrTopProduct: arrTopProductReducer
 });
 
-const store = createStore(reducer);
+const store = createStore(reducer, applyMiddleware(thunk));
 
 export default store;
