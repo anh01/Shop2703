@@ -4,6 +4,8 @@ const { getArrProductType } = require('./db');
 
 const app = express();
 
+app.use(express.static('public'));
+
 app.get('/init', (req, res) => {
     getArrProductType((err, arrProductType) => {
         if (err) return res.send(err);
