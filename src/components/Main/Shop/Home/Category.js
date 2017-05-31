@@ -14,8 +14,23 @@ class Category extends Component {
         const { navigator } = this.props;
         navigator.push({ name: 'LIST_PRODUCT' });
     }
+
     render() {
         const { wrapper, textStyle, imageStyle, cateTitle } = styles;
+
+        const getSwiperContent = (arrProductType) => {
+            if (arrProductType.length === 0) return <Text>Loading</Text>;
+            return (
+                arrProductType.map((e, i) => (
+                    <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
+                        <Image source={littleIcon} style={imageStyle}>
+                            <Text style={cateTitle}>{e.name}</Text>
+                        </Image>
+                    </TouchableOpacity>
+                ))
+            );
+        }
+
         return (
             <View style={wrapper}>
                 <View style={{ justifyContent: 'center', height: 50 }}>
@@ -23,13 +38,7 @@ class Category extends Component {
                 </View>
                 <View style={{ justifyContent: 'flex-end', flex: 4 }}>
                     <Swiper showsPagination width={imageWidth} height={imageHeight} >
-                        { this.props.arrProductType.map((e, i) => (
-                            <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
-                                <Image source={littleIcon} style={imageStyle}>
-                                    <Text style={cateTitle}>{e.name}</Text>
-                                </Image>
-                            </TouchableOpacity>
-                        ))}
+                        { getSwiperContent(this.props.arrProductType) }
                     </Swiper>
                 </View>
             </View>
