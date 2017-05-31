@@ -59,6 +59,7 @@ const signIn = (email, password, cb) => {
     });
 };
 
+
 module.exports = { getArrProductType, signIn, signUp };
 
 // signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
