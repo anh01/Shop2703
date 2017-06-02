@@ -32,11 +32,11 @@ const getArrProductType = (cb) => {
     });
 };
 
-const signUp = (email, password, name, address, phone, cb) => {
+const signUp = (email, password, name, cb) => {
     hash(password, 8, (err, encypted) => {
         if (err) return cb(err);
-        const sql = `INSERT INTO public."User"(email, password, name, phone, address)
-        VALUES ('${email}', '${encypted}', '${name}', '${phone}', '${address}');`;
+        const sql = `INSERT INTO public."User"(email, password, name)
+        VALUES ('${email}', '${encypted}', '${name}');`;
         queryDB(sql, (errQuery) => {
             if (errQuery) return cb(errQuery);
             cb();
@@ -59,8 +59,17 @@ const signIn = (email, password, cb) => {
     });
 };
 
+const getUserInfo = (email, cb) => {
+    const sql = `SELECT * FROM "User" WHERE email = '${email}'`;
+    queryDB(sql, (err, result) => {
+        if (err) return cb(err);
+        const { address, phone, name } = result.rows[0];
+        cb(undefined, { email, address, phone, name });
+    });
+};
 
-module.exports = { getArrProductType, signIn, signUp };
+
+module.exports = { getArrProductType, signIn, signUp, getUserInfo };
 
 // signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
 //     console.log(err);
