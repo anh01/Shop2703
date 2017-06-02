@@ -6,6 +6,8 @@ import {
 
 import icBack from '../../media/appIcon/back_white.png';
 import icLogo from '../../media/appIcon/ic_logo.png';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 export default class Authentication extends Component {
     constructor(props) {
@@ -30,33 +32,11 @@ export default class Authentication extends Component {
             row1, iconStyle, titleStyle,
             container, controlStyle,
             signInStyle, signUpStyle,
-            activeStyle, inactiveStyle,
-            inputStyle, bigButton, buttonText
+            activeStyle, inactiveStyle
         } = styles;
 
-        const signInJSX = (
-            <View>
-                <TextInput style={inputStyle} placeholder="Enter your email" />
-                <TextInput style={inputStyle} placeholder="Enter your password" />
-                <TouchableOpacity style={bigButton}>
-                    <Text style={buttonText}>SIGN IN NOW</Text>
-                </TouchableOpacity>
-            </View>
-        );
-
-        const signUpJSX = (
-            <View>
-                <TextInput style={inputStyle} placeholder="Enter your name" />
-                <TextInput style={inputStyle} placeholder="Enter your email" />
-                <TextInput style={inputStyle} placeholder="Enter your password" />
-                <TextInput style={inputStyle} placeholder="Re-enter your password" />
-                <TouchableOpacity style={bigButton}>
-                    <Text style={buttonText}>SIGN UP NOW</Text>
-                </TouchableOpacity>
-            </View>
-        );
         const { isSignIn } = this.state;
-        const mainJSX = isSignIn ? signInJSX : signUpJSX;
+        const mainJSX = isSignIn ? <SignIn /> : <SignUp />;
         return (
             <View style={container}>
                 <View style={row1}>
