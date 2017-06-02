@@ -3,10 +3,6 @@ import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'rea
 import Swiper from 'react-native-swiper';
 import { connect } from 'react-redux';
 
-import littleIcon from '../../../../media/temp/little.jpg';
-import maxiIcon from '../../../../media/temp/maxi.jpg';
-import partyIcon from '../../../../media/temp/party.jpg';
-
 const { width } = Dimensions.get('window');
 const prefix = 'http://localhost:3000/images/type/';
 
@@ -22,13 +18,15 @@ class Category extends Component {
         const getSwiperContent = (arrProductType) => {
             if (arrProductType.length === 0) return <Text>Loading</Text>;
             return (
-                arrProductType.map((e, i) => (
-                    <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
-                        <Image source={{ uri: `${prefix}${e.image}` }} style={imageStyle}>
-                            <Text style={cateTitle}>{e.name}</Text>
-                        </Image>
-                    </TouchableOpacity>
-                ))
+                <Swiper showsPagination width={imageWidth} height={imageHeight} >
+                    {arrProductType.map((e, i) => (
+                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
+                            <Image source={{ uri: `${prefix}${e.image}` }} style={imageStyle}>
+                                <Text style={cateTitle}>{e.name}</Text>
+                            </Image>
+                        </TouchableOpacity>
+                    ))}
+                </Swiper>
             );
         };
 
@@ -38,9 +36,7 @@ class Category extends Component {
                     <Text style={textStyle} >LIST OF CATEGORY</Text>
                 </View>
                 <View style={{ justifyContent: 'flex-end', flex: 4 }}>
-                    <Swiper showsPagination width={imageWidth} height={imageHeight} >
-                        { getSwiperContent(this.props.arrProductType) }
-                    </Swiper>
+                    { getSwiperContent(this.props.arrProductType) }
                 </View>
             </View>
         );
