@@ -15,7 +15,7 @@ const arrTopProductReducer = (state = [], action) => {
     return state;
 };
 
-const userReducer = (state = {}, action) => {
+const userReducer = (state = null, action) => {
     if (action.type === 'LOG_IN') return action.user;
     if (action.type === 'LOG_OUT') return null;
     return state;
