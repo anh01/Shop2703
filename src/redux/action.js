@@ -1,4 +1,5 @@
 import getInitData from '../api/getInitData';
+import signInAPI from '../api/signIn';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -22,3 +23,15 @@ const initCategoryAction = dispatch => {
 };
 
 export const getInitCategory = () => initCategoryAction;
+
+export const signIn = (email, password) => {
+    const signInAction = dispatch => {
+        signInAPI(email, password)
+        .then(res => {
+            console.log(res.user);
+            dispatch({ type: 'LOG_IN', user: res.user });
+        })
+        .catch(() => console.log('DANG_NHAP_KHONG_THANH_CONG'));
+    };
+    return signInAction;
+};

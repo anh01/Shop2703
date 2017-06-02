@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { View, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import signInAPI from '../../api/signIn';
+import { connect } from 'react-redux';
 
-export default class SignIn extends Component {
+import { signIn } from '../../redux/action';
+
+class SignIn extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -13,8 +15,7 @@ export default class SignIn extends Component {
 
     onSignIn() {
         const { email, password } = this.state;
-        signInAPI(email, password)
-        .then(res => console.log(res));
+        this.props.signIn(email, password);
     }
 
     render() {
@@ -43,6 +44,8 @@ export default class SignIn extends Component {
         );
     }
 }
+
+export default connect(undefined, { signIn })(SignIn);
 
 const styles = StyleSheet.create({
     inputStyle: {
