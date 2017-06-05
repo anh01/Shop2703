@@ -1,6 +1,6 @@
 const express = require('express');
 const jsonParser = require('body-parser').json();
-const { getArrProductType, signIn, signUp, getUserInfo } = require('./db');
+const { getArrProductType, signIn, signUp, getUserInfo, getTopProduct } = require('./db');
 const { getEmailFromToken, getTokenFromEmail } = require('./jwt');
 
 const app = express();
@@ -11,6 +11,13 @@ app.get('/init', (req, res) => {
     getArrProductType((err, arrProductType) => {
         if (err) return res.send(err);
         res.send(arrProductType);
+    });
+});
+
+app.get('/initTopProduct', (req, res) => {
+    getTopProduct((err, arrTopProduct) => {
+        if (err) return res.send(err);
+        res.send(arrTopProduct);
     });
 });
 

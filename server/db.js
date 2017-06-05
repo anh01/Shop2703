@@ -32,6 +32,21 @@ const getArrProductType = (cb) => {
     });
 };
 
+const getTopProduct = (cb) => {
+    const sql = `SELECT "Product".*, json_agg("Image".filename) as images FROM "Product"
+    INNER JOIN "Image"
+    ON "Product".id = "Image"."idProduct"
+    WHERE "Product"."inTop" = true
+    GROUP BY "Product".id
+    ORDER BY "Product".id ASC`;
+    queryDB(sql, (err, result) => {
+        if (err) return cb(err);
+        cb(undefined, result.rows);
+    });
+};
+
+// getTopProduct((err, products) => console.log(products));
+
 const signUp = (email, password, name, cb) => {
     hash(password, 8, (err, encypted) => {
         if (err) return cb(err);
@@ -69,7 +84,7 @@ const getUserInfo = (email, cb) => {
 };
 
 
-module.exports = { getArrProductType, signIn, signUp, getUserInfo };
+module.exports = { getArrProductType, signIn, signUp, getUserInfo, getTopProduct };
 
 // signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
 //     console.log(err);
