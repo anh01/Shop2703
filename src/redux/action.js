@@ -27,15 +27,16 @@ const initCategoryAction = dispatch => {
 
 export const getInitCategory = () => initCategoryAction;
 
-export const signIn = (email, password) => {
+export const signIn = (email, password, cb) => {
     const signInAction = dispatch => {
         signInAPI(email, password)
         .then(res => {
-            console.log(res.user);
+            if (res.error) return cb(res.error); 
             saveToken(res.token);
             dispatch({ type: 'LOG_IN', user: res.user });
+            cb();
         })
-        .catch(() => console.log('DANG_NHAP_KHONG_THANH_CONG'));
+        .catch(() => cb('DANG_NHAP_KHONG_THANH_CONG'));
     };
     return signInAction;
 };

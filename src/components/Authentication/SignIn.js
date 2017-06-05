@@ -15,8 +15,10 @@ class SignIn extends Component {
 
     onSignIn() {
         const { email, password } = this.state;
-        this.props.signIn(email, password);
-        this.props.goBackToMain();
+        this.props.signIn(email, password, err => {
+            if (err) return console.log('LOI');
+            this.props.goBackToMain();
+        });
     }
 
     render() {

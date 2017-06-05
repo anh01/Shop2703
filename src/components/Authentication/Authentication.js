@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import {
-    View, Text, TextInput,
-    TouchableOpacity, Image, StyleSheet
+    View, Text, TouchableOpacity, Image, StyleSheet
 } from 'react-native';
 
 import icBack from '../../media/appIcon/back_white.png';
