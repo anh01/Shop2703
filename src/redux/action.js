@@ -1,5 +1,8 @@
 import getInitData from '../api/getInitData';
 import signInAPI from '../api/signIn';
+import getToken from '../api/getToken';
+import saveToken from '../api/saveToken';
+import checkUserState from '../api/checkUserState';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -29,9 +32,26 @@ export const signIn = (email, password) => {
         signInAPI(email, password)
         .then(res => {
             console.log(res.user);
+            saveToken(res.token);
             dispatch({ type: 'LOG_IN', user: res.user });
         })
         .catch(() => console.log('DANG_NHAP_KHONG_THANH_CONG'));
     };
     return signInAction;
+};
+
+export const checkToken = () => {
+    const check = async (dispatch) => {
+        const token = await getToken();
+        if (token === '') return;
+        const resJSON = await checkUserState(token);
+        if (resJSON.error) return;
+        dispatch({ type: 'LOG_IN', user: resJSON });
+    }; 
+    return check;
+};
+
+export const signOut = () => {
+    saveToken('');
+    return { type: 'LOG_OUT' };
 };

@@ -4,7 +4,7 @@ import {
     TouchableOpacity, StyleSheet, Image
 } from 'react-native';
 import { connect } from 'react-redux';
-
+import { signOut } from '../../redux/action';
 
 import profileIcon from '../../media/temp/profile.png';
 
@@ -44,7 +44,7 @@ class Menu extends Component {
                     <TouchableOpacity style={btnSignInStyle} onPress={this.gotoChangeInfo.bind(this)}>
                         <Text style={btnTextSignIn}>Change Info</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={btnSignInStyle}>
+                    <TouchableOpacity style={btnSignInStyle} onPress={() => this.props.signOut()}>
                         <Text style={btnTextSignIn}>Sign out</Text>
                     </TouchableOpacity>
                 </View>
@@ -117,4 +117,4 @@ function mapStateToProps(state) {
     return { user: state.user };
 }
 
-export default connect(mapStateToProps)(Menu);
+export default connect(mapStateToProps, { signOut })(Menu);
