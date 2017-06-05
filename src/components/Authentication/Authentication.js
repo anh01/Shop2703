@@ -27,6 +27,7 @@ export default class Authentication extends Component {
         const { navigator } = this.props;
         navigator.pop();
     }
+
     render() {
         const {
             row1, iconStyle, titleStyle,
@@ -36,7 +37,7 @@ export default class Authentication extends Component {
         } = styles;
 
         const { isSignIn } = this.state;
-        const mainJSX = isSignIn ? <SignIn /> : <SignUp />;
+        const mainJSX = isSignIn ? <SignIn goBackToMain={this.goBackToMain.bind(this)} /> : <SignUp />;
         return (
             <View style={container}>
                 <View style={row1}>

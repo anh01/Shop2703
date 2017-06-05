@@ -16,6 +16,7 @@ class SignIn extends Component {
     onSignIn() {
         const { email, password } = this.state;
         this.props.signIn(email, password);
+        this.props.goBackToMain();
     }
 
     render() {
