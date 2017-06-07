@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { 
     View, Text, StyleSheet, Image, Dimensions, ScrollView, TouchableOpacity 
 } from 'react-native';
+import { connect } from 'react-redux';
+import { addProductToCart } from '../../../../redux/action';
 
 const back = require('../../../../media/appIcon/back.png');
 const cart = require('../../../../media/appIcon/cartfull.png');
 
 const prefix = 'http://localhost:3000/images/product/';
 
-export default class ProductDetail extends Component {
+class ProductDetail extends Component {
     goBack() {
         const { navigator } = this.props;
         navigator.pop();
@@ -30,7 +32,7 @@ export default class ProductDetail extends Component {
                         <TouchableOpacity onPress={this.goBack.bind(this)}>
                             <Image style={backStyle} source={back} />
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => this.props.addProductToCart(this.props.product)}>
                             <Image style={cartStyle} source={cart} />
                         </TouchableOpacity>
                     </View>
@@ -169,3 +171,5 @@ const styles = StyleSheet.create({
         fontFamily: 'Avenir'
     }
 });
+
+export default connect(undefined, { addProductToCart })(ProductDetail);

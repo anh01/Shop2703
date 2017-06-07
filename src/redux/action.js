@@ -65,3 +65,5 @@ export const getTopProduct = () => ((dispatch) => {
         arrayTopProduct
     }));
 });
+
+export const addProductToCart = (product) => ({ type: 'ADD_PRODUCT', product });
