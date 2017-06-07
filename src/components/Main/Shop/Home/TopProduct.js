@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, Image, StyleSheet, Dimensions, TouchableOpacity } from 'react-native';
-
+import { 
+    View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, ListView 
+} from 'react-native';
+import { connect } from 'react-redux';
 import sp1 from '../../../../media/temp/sp1.jpeg';
-import sp2 from '../../../../media/temp/sp2.jpeg';
-import sp3 from '../../../../media/temp/sp3.jpeg';
-import sp4 from '../../../../media/temp/sp4.jpeg';
 
-export default class TopProduct extends Component {
+class TopProduct extends Component {
     gotoDetail() {
         const { navigator } = this.props;
         navigator.push({ name: 'PRODUCT_DETAIL' });
@@ -22,29 +21,22 @@ export default class TopProduct extends Component {
                 <View style={titleContainer}>
                     <Text style={title}>TOP PRODUCT</Text>
                 </View>
-                <View style={body}>
-                    <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp1} style={productImage} />
-                        <Text style={produceName}>PRODUCT NAME</Text>
-                        <Text style={producePrice}>400$</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp2} style={productImage} />
-                        <Text style={produceName}>PRODUCT NAME</Text>
-                        <Text style={producePrice}>250$</Text>
-                    </TouchableOpacity>
-                    <View style={{ height: 10, width }} />
-                    <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp3} style={productImage} />
-                        <Text style={produceName}>PRODUCT NAME</Text>
-                        <Text style={producePrice}>400$</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
-                        <Image source={sp4} style={productImage} />
-                        <Text style={produceName}>PRODUCT NAME</Text>
-                        <Text style={producePrice}>250$</Text>
-                    </TouchableOpacity>
-                </View>
+                
+                <ListView 
+                    contentContainerStyle={body}
+                    enableEmptySections
+                    dataSource={
+                        new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
+                        .cloneWithRows(this.props.arrTopProduct)
+                    }
+                    renderRow={() => (
+                        <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
+                            <Image source={sp1} style={productImage} />
+                            <Text style={produceName}>PRODUCT NAME</Text>
+                            <Text style={producePrice}>400$</Text>
+                        </TouchableOpacity>
+                    )}
+                />
             </View>
         );
     }
@@ -53,6 +45,7 @@ export default class TopProduct extends Component {
 const { width } = Dimensions.get('window');
 const produtWidth = (width - 60) / 2;
 const productImageHeight = (produtWidth / 361) * 452; 
+
 
 const styles = StyleSheet.create({
     container: {
@@ -102,5 +95,10 @@ const styles = StyleSheet.create({
     }
 });
 
+function mapStateToProps(state) {
+    return { arrTopProduct: state.arrTopProduct };
+}
+
+export default connect(mapStateToProps)(TopProduct);
 
 // https://github.com/vanpho93/LiveCodeReactNative

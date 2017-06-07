@@ -3,6 +3,7 @@ import signInAPI from '../api/signIn';
 import getToken from '../api/getToken';
 import saveToken from '../api/saveToken';
 import checkUserState from '../api/checkUserState';
+import getInitTopProduct from '../api/getInitTopProduct';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -56,3 +57,11 @@ export const signOut = () => {
     saveToken('');
     return { type: 'LOG_OUT' };
 };
+
+export const getTopProduct = () => ((dispatch) => {
+    getInitTopProduct()
+    .then(arrayTopProduct => dispatch({ 
+        type: 'INIT_TOP_PRODUCT',
+        arrayTopProduct
+    }));
+});
