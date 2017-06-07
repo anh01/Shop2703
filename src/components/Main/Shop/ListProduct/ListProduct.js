@@ -24,7 +24,7 @@ export default class ListProduct extends Component {
             container, header, wrapper, backStyle, titleStyle,
             productContainer, productImage, productInfo, lastRowInfo,
             txtName, txtPrice, txtMaterial, txtColor, txtShowDetail
-         } = styles;
+        } = styles;
 
         const { name } = this.props.category;
         return (

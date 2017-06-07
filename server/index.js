@@ -1,6 +1,6 @@
 const express = require('express');
 const jsonParser = require('body-parser').json();
-const { getArrProductType, signIn, signUp, getUserInfo, getTopProduct } = require('./db');
+const { getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType } = require('./db');
 const { getEmailFromToken, getTokenFromEmail } = require('./jwt');
 
 const app = express();
@@ -50,9 +50,12 @@ app.post('/check', jsonParser, (req, res) => {
     });
 });
 
-app.listen(3000, () => console.log('Server started'));
+app.get('/productByCategory/:idType/:idMax', (req, res) => {
+    const { idType, idMax } = req.params;
+    getProductByIdType(idType, idMax, (err, products) => {
+        if (err) res.send(err);
+        res.send(products);
+    });
+});
 
-//Man hinh dang ky
-//Man hinh dang nhap
-//Man hinh public
-//Man hinh private
+app.listen(3000, () => console.log('Server started'));

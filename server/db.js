@@ -83,8 +83,20 @@ const getUserInfo = (email, cb) => {
     });
 };
 
+const getProductByIdType = (idType, idMax, cb) => {
+    const sql = `SELECT "Product".*, json_agg("Image".filename) as images FROM "Product"
+    INNER JOIN "Image"
+    ON "Product".id = "Image"."idProduct"
+    WHERE "Product"."idType" = ${idType} AND "Product".id > ${idMax} 
+    GROUP BY "Product".id
+    ORDER BY "Product".id ASC LIMIT 3`;
+    queryDB(sql, (err, result) => {
+        if (err) return cb(err);
+        cb(undefined, result.rows);
+    });
+};
 
-module.exports = { getArrProductType, signIn, signUp, getUserInfo, getTopProduct };
+module.exports = { getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType };
 
 // signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
 //     console.log(err);
