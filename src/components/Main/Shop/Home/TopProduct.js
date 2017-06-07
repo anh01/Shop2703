@@ -3,7 +3,8 @@ import {
     View, Text, Image, StyleSheet, Dimensions, TouchableOpacity, ListView 
 } from 'react-native';
 import { connect } from 'react-redux';
-import sp1 from '../../../../media/temp/sp1.jpeg';
+
+const prefix = 'http://localhost:3000/images/product/';
 
 class TopProduct extends Component {
     gotoDetail() {
@@ -29,11 +30,11 @@ class TopProduct extends Component {
                         new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
                         .cloneWithRows(this.props.arrTopProduct)
                     }
-                    renderRow={() => (
+                    renderRow={(product) => (
                         <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
-                            <Image source={sp1} style={productImage} />
-                            <Text style={produceName}>PRODUCT NAME</Text>
-                            <Text style={producePrice}>400$</Text>
+                            <Image source={{ uri: `${prefix}${product.images[0]}` }} style={productImage} />
+                            <Text style={produceName}>{product.name.toUpperCase()}</Text>
+                            <Text style={producePrice}>{product.price}$</Text>
                         </TouchableOpacity>
                     )}
                 />
