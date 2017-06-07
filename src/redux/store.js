@@ -21,10 +21,17 @@ const userReducer = (state = null, action) => {
     return state;
 };
 
+const cartArrayReducer = (state = [], action) => {
+    if (action.type === 'ADD_PRODUCT') return state.concat(action.product);
+    if (action.type === 'REMOVE_PRODUCT') return state.filter(e => e.id !== action.id);
+    return state;
+};
+
 const reducer = combineReducers({
     arrProductType: arrProductTypeReducer,
     arrTopProduct: arrTopProductReducer,
-    user: userReducer
+    user: userReducer,
+    cartArray: cartArrayReducer
 });
 
 const store = createStore(reducer, applyMiddleware(thunk));

@@ -30,9 +30,9 @@ export default class ListProduct extends Component {
         navigator.pop();
     }
 
-    gotoDetail() {
+    gotoDetail(product) {
         const { navigator } = this.props;
-        navigator.push({ name: 'PRODUCT_DETAIL' });
+        navigator.push({ name: 'PRODUCT_DETAIL', product });
     }
 
     render() {
@@ -72,7 +72,7 @@ export default class ListProduct extends Component {
                                 <View style={lastRowInfo}>
                                     <Text style={txtColor}>Colo RoyalBlue</Text>
                                     <View style={{ backgroundColor: 'cyan', height: 16, width: 16, borderRadius: 8 }} />
-                                    <TouchableOpacity onPress={this.gotoDetail.bind(this)}>
+                                    <TouchableOpacity onPress={() => this.gotoDetail(product)}>
                                         <Text style={txtShowDetail}>SHOW DETAILS</Text>
                                     </TouchableOpacity>
                                 </View>

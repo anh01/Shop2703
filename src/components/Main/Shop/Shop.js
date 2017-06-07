@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Image, StyleSheet } from 'react-native';
 import TabNavigator from 'react-native-tab-navigator';
+import { connect } from 'react-redux';
+
 import Header from './Header';
 import Home from './Home/Home';
 import Contact from './Contact/Contact';
@@ -47,7 +49,7 @@ class Shop extends Component {
                         onPress={() => this.setState({ selectedTab: 'cart' })}
                         renderIcon={() => <Image source={cartIcon} style={iconStyle} />}
                         renderSelectedIcon={() => <Image source={cartIconS} style={iconStyle} />}
-                        badgeText="1"
+                        badgeText={this.props.cartArray.length}
                         selectedTitleStyle={{ color: '#34B089', fontFamily: 'Avenir' }}
                     >
                         <Cart />
@@ -84,4 +86,8 @@ const styles = StyleSheet.create({
     }
 });
 
-export default Shop;
+function mapStateToProps(state) {
+    return { cartArray: state.cartArray };
+}
+
+export default connect(mapStateToProps)(Shop);
