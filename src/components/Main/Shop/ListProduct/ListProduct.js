@@ -25,6 +25,8 @@ export default class ListProduct extends Component {
             productContainer, productImage, productInfo, lastRowInfo,
             txtName, txtPrice, txtMaterial, txtColor, txtShowDetail
          } = styles;
+
+        const { name } = this.props.category;
         return (
             <View style={container}>
                 <ScrollView style={wrapper}>
@@ -32,7 +34,7 @@ export default class ListProduct extends Component {
                         <TouchableOpacity onPress={this.goBack.bind(this)}>
                             <Image source={backList} style={backStyle} />
                         </TouchableOpacity>
-                        <Text style={titleStyle}>Party Dress</Text>
+                        <Text style={titleStyle}>{name.toUpperCase()}</Text>
                         <View style={{ width: 30 }} />
                     </View>
                     <View style={productContainer}>

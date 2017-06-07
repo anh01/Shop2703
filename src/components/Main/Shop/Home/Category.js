@@ -7,9 +7,9 @@ const { width } = Dimensions.get('window');
 const prefix = 'http://localhost:3000/images/type/';
 
 class Category extends Component {
-    gotoListProduct() {
+    gotoListProduct(category) {
         const { navigator } = this.props;
-        navigator.push({ name: 'LIST_PRODUCT' });
+        navigator.push({ name: 'LIST_PRODUCT', category });
     }
 
     render() {
@@ -20,7 +20,7 @@ class Category extends Component {
             return (
                 <Swiper showsPagination width={imageWidth} height={imageHeight} >
                     {arrProductType.map((e, i) => (
-                        <TouchableOpacity onPress={this.gotoListProduct.bind(this)} key={i}>
+                        <TouchableOpacity onPress={() => this.gotoListProduct(e)} key={i}>
                             <Image source={{ uri: `${prefix}${e.image}` }} style={imageStyle}>
                                 <Text style={cateTitle}>{e.name}</Text>
                             </Image>
