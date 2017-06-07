@@ -3,11 +3,10 @@ import {
     View, Text, StyleSheet, Image, Dimensions, ScrollView, TouchableOpacity 
 } from 'react-native';
 
-import sp1 from '../../../../media/temp/sp1.jpeg';
-import sp2 from '../../../../media/temp/sp2.jpeg';
-
 const back = require('../../../../media/appIcon/back.png');
 const cart = require('../../../../media/appIcon/cartfull.png');
+
+const prefix = 'http://localhost:3000/images/product/';
 
 export default class ProductDetail extends Component {
     goBack() {
@@ -22,6 +21,8 @@ export default class ProductDetail extends Component {
             textSmoke, textHighlight, textMain, titleContainer,
             descContainer, productImageStyle, descStyle, txtMaterial, txtColor
         } = styles;
+
+        const { name, images } = this.props.product;
         return (
             <View style={wrapper}>
                 <View style={cardStyle}>
@@ -35,14 +36,14 @@ export default class ProductDetail extends Component {
                     </View>
                     <View style={imageContainer}>
                         <ScrollView style={{ flexDirection: 'row', padding: 10, height: swiperHeight }} horizontal >
-                            <Image source={sp1} style={productImageStyle} />
-                            <Image source={sp2} style={productImageStyle} />
+                            <Image source={{ uri: `${prefix}${images[0]}` }} style={productImageStyle} />
+                            <Image source={{ uri: `${prefix}${images[1]}` }} style={productImageStyle} />
                         </ScrollView>
                     </View>
                     <View style={footer}>
                         <View style={titleContainer}>
                             <Text style={textMain}>
-                                <Text style={textBlack}>{'Black dress'.toUpperCase()}</Text>
+                                <Text style={textBlack}>{name.toUpperCase()}</Text>
                                 <Text style={textHighlight}> / </Text>
                                 <Text style={textSmoke}>{100}$</Text>
                             </Text>

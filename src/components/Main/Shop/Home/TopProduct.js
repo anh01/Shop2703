@@ -7,9 +7,9 @@ import { connect } from 'react-redux';
 const prefix = 'http://localhost:3000/images/product/';
 
 class TopProduct extends Component {
-    gotoDetail() {
+    gotoDetail(product) {
         const { navigator } = this.props;
-        navigator.push({ name: 'PRODUCT_DETAIL' });
+        navigator.push({ name: 'PRODUCT_DETAIL', product });
     }
     render() {
         const { 
@@ -31,7 +31,7 @@ class TopProduct extends Component {
                         .cloneWithRows(this.props.arrTopProduct)
                     }
                     renderRow={(product) => (
-                        <TouchableOpacity style={productContainer} onPress={this.gotoDetail.bind(this)}>
+                        <TouchableOpacity style={productContainer} onPress={() => this.gotoDetail(product)}>
                             <Image source={{ uri: `${prefix}${product.images[0]}` }} style={productImage} />
                             <Text style={produceName}>{product.name.toUpperCase()}</Text>
                             <Text style={producePrice}>{product.price}$</Text>

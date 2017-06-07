@@ -14,7 +14,7 @@ class Home extends Component {
                     switch (route.name) {
                         case 'HOME_VIEW': return <HomeView navigator={navigator} />;
                         case 'LIST_PRODUCT': return <ListProduct navigator={navigator} />;
-                        default: return <ProductDetail navigator={navigator} />;
+                        default: return <ProductDetail navigator={navigator} product={route.product} />;
                     }
                 }}
             />
