@@ -5,6 +5,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { incrQuantityInCart } from '../../../../redux/action';
+import saveCart from '../../../../api/saveCart';
 
 const prefix = 'http://localhost:3000/images/product/';
 
@@ -17,6 +18,11 @@ class CartView extends Component {
         const { navigator } = this.props;
         navigator.push({ name: 'PRODUCT_DETAIL' });
     }
+
+    componentWillReceiveProps(nextProps) {
+        saveCart(nextProps.cartArray);
+    }
+
     render() {
         const { main, checkoutButton, checkoutTitle, wrapper,
             product, mainRight, productController,

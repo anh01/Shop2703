@@ -4,6 +4,7 @@ import getToken from '../api/getToken';
 import saveToken from '../api/saveToken';
 import checkUserState from '../api/checkUserState';
 import getInitTopProduct from '../api/getInitTopProduct';
+import getCart from '../api/getCart';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -51,6 +52,14 @@ export const checkToken = () => {
         dispatch({ type: 'LOG_IN', user: resJSON });
     }; 
     return check;
+};
+
+export const initCartArray = () => {
+    const getCartAsync = (dispatch) => {
+        getCart()
+        .then(cartArray => dispatch({ type: 'SET_CART_ARRAY', cartArray }));
+    };
+    return getCartAsync;
 };
 
 export const signOut = () => {

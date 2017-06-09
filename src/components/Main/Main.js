@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import Drawer from 'react-native-drawer';
 import { connect } from 'react-redux';
 
-import { getInitCategory, checkToken, getTopProduct } from '../../redux/action';
+import { getInitCategory, checkToken, getTopProduct, initCartArray } from '../../redux/action';
 import Menu from './Menu';
 import Shop from './Shop/Shop';
 
@@ -12,6 +12,7 @@ class Main extends Component {
         this.props.getInitCategory();
         this.props.checkToken();
         this.props.getTopProduct();
+        this.props.initCartArray();
     }
 
     closeControlPanel = () => {
@@ -37,4 +38,4 @@ class Main extends Component {
     }
 }
 
-export default connect(undefined, { getInitCategory, checkToken, getTopProduct })(Main);
+export default connect(undefined, { getInitCategory, checkToken, getTopProduct, initCartArray })(Main);

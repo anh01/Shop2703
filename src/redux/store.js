@@ -1,5 +1,6 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import  saveCart from '../api/saveCart';
 
 const arrProductTypeReducer = (state = [], action) => {
     if (action.type === 'INIT_PRODUCT_TYPE') {
@@ -22,6 +23,7 @@ const userReducer = (state = null, action) => {
 };
 
 const cartArrayReducer = (state = [], action) => {
+    if (action.type === 'SET_CART_ARRAY') return action.cartArray;
     if (action.type === 'ADD_PRODUCT') return state.concat(action.cartItem);
     if (action.type === 'REMOVE_PRODUCT') return state.filter(e => e.id !== action.id);
     if (action.type === 'INCR_QUANTITY') {
