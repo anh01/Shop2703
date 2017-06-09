@@ -66,4 +66,9 @@ export const getTopProduct = () => ((dispatch) => {
     }));
 });
 
-export const addProductToCart = (product) => ({ type: 'ADD_PRODUCT', product });
+export const addProductToCart = (product) => ({ 
+    type: 'ADD_PRODUCT', 
+    cartItem: { product, quantity: 1 } 
+});
+
+export const incrQuantityInCart = (id) => ({ type: 'INCR_QUANTITY', id });

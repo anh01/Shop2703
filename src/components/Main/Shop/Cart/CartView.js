@@ -4,7 +4,7 @@ import {
     Dimensions, StyleSheet, Image, ListView
 } from 'react-native';
 import { connect } from 'react-redux';
-import sp1 from '../../.././../media/temp/sp1.jpeg';
+import { incrQuantityInCart } from '../../../../redux/action';
 
 const prefix = 'http://localhost:3000/images/product/';
 
@@ -32,25 +32,25 @@ class CartView extends Component {
                         new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 })
                             .cloneWithRows(this.props.cartArray)
                     }
-                    renderRow={(productItem) => (
+                    renderRow={(cartItem) => (
                         <View style={product}>
-                            <Image source={{ uri: `${prefix}${productItem.images[0]}` }} style={productImage} />
+                            <Image source={{ uri: `${prefix}${cartItem.product.images[0]}` }} style={productImage} />
                             <View style={[mainRight]}>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
-                                    <Text style={txtName}>{toTitleCase(productItem.name)}</Text>
+                                    <Text style={txtName}>{toTitleCase(cartItem.product.name)}</Text>
                                     <TouchableOpacity>
                                         <Text style={{ fontFamily: 'Avenir', color: '#969696' }}>X</Text>
                                     </TouchableOpacity>
                                 </View>
                                 <View>
-                                    <Text style={txtPrice}>{productItem.price}$</Text>
+                                    <Text style={txtPrice}>{cartItem.product.price}$</Text>
                                 </View>
                                 <View style={productController}>
                                     <View style={numberOfProduct}>
-                                        <TouchableOpacity>
+                                        <TouchableOpacity onPress={() => this.props.incrQuantityInCart(cartItem.product.id)}>
                                             <Text>+</Text>
                                         </TouchableOpacity>
-                                        <Text>{3}</Text>
+                                        <Text>{cartItem.quantity}</Text>
                                         <TouchableOpacity>
                                             <Text>-</Text>
                                         </TouchableOpacity>
@@ -158,4 +158,4 @@ function mapStateToProps(state) {
     return { cartArray: state.cartArray };
 }
 
-export default connect(mapStateToProps)(CartView);
+export default connect(mapStateToProps, { incrQuantityInCart })(CartView);
