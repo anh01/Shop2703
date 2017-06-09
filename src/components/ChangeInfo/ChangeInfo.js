@@ -4,11 +4,27 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import backSpecial from '../../media/appIcon/backs.png';
+import { changeInfo } from '../../redux/action';
 
 class ChangeInfo extends Component {
+    constructor(props) {
+        super(props);
+        const { name, address, phone } = this.props.user;
+        this.state = {
+            txtName: name,
+            txtAddress: address,
+            txtPhone: phone
+        };
+    }
+
     goBackToMain() {
         const { navigator } = this.props;
         navigator.pop();
+    }
+
+    updateInfo() {
+        const { txtName, txtAddress, txtPhone } = this.state;
+        this.props.changeInfo(txtName, txtPhone, txtAddress, () => console.log('XONG'));
     }
 
     render() {
@@ -31,24 +47,24 @@ class ChangeInfo extends Component {
                         style={textInput}
                         placeholder="Enter your name"
                         autoCapitalize="none"
-                        value={name}
-                        onChangeText={txtName => this.setState({ ...this.state, txtName })}
+                        defaultValue={name}
+                        onChangeText={txtName => this.setState({ txtName })}
                     />
                     <TextInput
                         style={textInput}
                         placeholder="Enter your address"
                         autoCapitalize="none"
-                        value={address}
-                        onChangeText={txtAddress => this.setState({ ...this.state, txtAddress })}
+                        defaultValue={address}
+                        onChangeText={txtAddress => this.setState({ txtAddress })}
                     />
                     <TextInput
                         style={textInput}
                         placeholder="Enter your phone number"
                         autoCapitalize="none"
-                        value={phone}
-                        onChangeText={txtPhone => this.setState({ ...this.state, txtPhone })}
+                        defaultValue={phone}
+                        onChangeText={txtPhone => this.setState({ txtPhone })}
                     />
-                    <TouchableOpacity style={signInContainer}>
+                    <TouchableOpacity style={signInContainer} onPress={this.updateInfo.bind(this)}>
                         <Text style={signInTextStyle}>CHANGE YOUR INFOMATION</Text>
                     </TouchableOpacity>
                 </View>
@@ -96,4 +112,4 @@ function mapStateToProps(state) {
     return { user: state.user };
 }
 
-export default connect(mapStateToProps)(ChangeInfo);
+export default connect(mapStateToProps, { changeInfo })(ChangeInfo);

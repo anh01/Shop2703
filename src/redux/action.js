@@ -5,6 +5,7 @@ import saveToken from '../api/saveToken';
 import checkUserState from '../api/checkUserState';
 import getInitTopProduct from '../api/getInitTopProduct';
 import getCart from '../api/getCart';
+import updateInfoAPI from '../api/updateInfo';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -79,6 +80,22 @@ export const addProductToCart = (product) => ({
     type: 'ADD_PRODUCT', 
     cartItem: { product, quantity: 1 } 
 });
+
+export const changeInfo = (name, phone, address, onCompleted) => {
+    const changeInfoAsync = (dispatch) => {
+        getToken()
+        .then(token => updateInfoAPI(token, name, address, phone))
+        .then(res => {
+            if (res !== 'THANH_CONG') return console.log('LOI');
+            dispatch({
+                type: 'LOG_IN',
+                user: { name, phone, address }
+            });
+            onCompleted();
+        });
+    };
+    return changeInfoAsync;
+};
 
 export const removeCartItem = (id) => ({ type: 'REMOVE_PRODUCT', id });
 
