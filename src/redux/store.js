@@ -25,7 +25,7 @@ const userReducer = (state = null, action) => {
 const cartArrayReducer = (state = [], action) => {
     if (action.type === 'SET_CART_ARRAY') return action.cartArray;
     if (action.type === 'ADD_PRODUCT') return state.concat(action.cartItem);
-    if (action.type === 'REMOVE_PRODUCT') return state.filter(e => e.id !== action.id);
+    if (action.type === 'REMOVE_PRODUCT') return state.filter(e => e.product.id !== action.id);
     if (action.type === 'INCR_QUANTITY') {
         return state.map(e => {
             if (e.product.id !== action.id) return e;

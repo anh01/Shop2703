@@ -4,7 +4,7 @@ import {
     Dimensions, StyleSheet, Image, ListView
 } from 'react-native';
 import { connect } from 'react-redux';
-import { incrQuantityInCart } from '../../../../redux/action';
+import { incrQuantityInCart, removeCartItem } from '../../../../redux/action';
 import saveCart from '../../../../api/saveCart';
 
 const prefix = 'http://localhost:3000/images/product/';
@@ -44,7 +44,7 @@ class CartView extends Component {
                             <View style={[mainRight]}>
                                 <View style={{ justifyContent: 'space-between', flexDirection: 'row' }}>
                                     <Text style={txtName}>{toTitleCase(cartItem.product.name)}</Text>
-                                    <TouchableOpacity>
+                                    <TouchableOpacity onPress={() => this.props.removeCartItem(cartItem.product.id)}>
                                         <Text style={{ fontFamily: 'Avenir', color: '#969696' }}>X</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -164,4 +164,4 @@ function mapStateToProps(state) {
     return { cartArray: state.cartArray };
 }
 
-export default connect(mapStateToProps, { incrQuantityInCart })(CartView);
+export default connect(mapStateToProps, { incrQuantityInCart, removeCartItem })(CartView);

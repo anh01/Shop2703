@@ -80,4 +80,6 @@ export const addProductToCart = (product) => ({
     cartItem: { product, quantity: 1 } 
 });
 
+export const removeCartItem = (id) => ({ type: 'REMOVE_PRODUCT', id });
+
 export const incrQuantityInCart = (id) => ({ type: 'INCR_QUANTITY', id });
