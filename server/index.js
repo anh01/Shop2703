@@ -1,6 +1,8 @@
 const express = require('express');
 const jsonParser = require('body-parser').json();
-const { getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType } = require('./db');
+const { 
+    getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType, changeInfo 
+} = require('./db');
 const { getEmailFromToken, getTokenFromEmail } = require('./jwt');
 
 const app = express();
@@ -55,6 +57,17 @@ app.get('/productByCategory/:idType/:idMax', (req, res) => {
     getProductByIdType(idType, idMax, (err, products) => {
         if (err) res.send(err);
         res.send(products);
+    });
+});
+
+app.post('/changeInfo', jsonParser, (req, res) => {
+    const { token, name, address, phone } = req.body;
+    getEmailFromToken(token, (err, email) => {
+        if (err) return res.send(err.toString());
+        changeInfo(email, phone, address, name, errDB => {
+            if (errDB) return res.send(errDB.toString());
+            res.send('THANH_CONG');
+        });
     });
 });
 

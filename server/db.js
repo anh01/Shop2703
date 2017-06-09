@@ -96,7 +96,19 @@ const getProductByIdType = (idType, idMax, cb) => {
     });
 };
 
-module.exports = { getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType };
+const changeInfo = (email, phone, address, name, cb) => {
+    const sql = `UPDATE public."User"
+	SET name='${name}', phone='${phone}', address='${address}'
+	WHERE email='${email}';`;
+    queryDB(sql, (err) => {
+        if (err) return cb(err);
+        cb(undefined);
+    });
+};
+
+module.exports = { 
+    getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType, changeInfo 
+};
 
 // signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
 //     console.log(err);

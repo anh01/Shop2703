@@ -2,17 +2,10 @@ import React, { Component } from 'react';
 import {
     View, TouchableOpacity, Text, Image, StyleSheet, TextInput
 } from 'react-native';
+import { connect } from 'react-redux';
 import backSpecial from '../../media/appIcon/backs.png';
 
-export default class ChangeInfo extends Component {
-    constructor(props) {
-        super(props);
-        this.state = { 
-            txtName: 'Nguyen Van Pho', 
-            txtAddress: '92 Le Thi Rieng / Ben Thanh', 
-            txtPhone: '01694472176' 
-        };
-    }
+class ChangeInfo extends Component {
     goBackToMain() {
         const { navigator } = this.props;
         navigator.pop();
@@ -23,7 +16,7 @@ export default class ChangeInfo extends Component {
             wrapper, header, headerTitle, backIconStyle, body,
             signInContainer, signInTextStyle, textInput
         } = styles;
-        const { name, address, phone } = this.state;
+        const { name, address, phone } = this.props.user;
         return (
             <View style={wrapper}>
                 <View style={header}>
@@ -98,3 +91,9 @@ const styles = StyleSheet.create({
         marginTop: 50
     }
 });
+
+function mapStateToProps(state) {
+    return { user: state.user };
+}
+
+export default connect(mapStateToProps)(ChangeInfo);
