@@ -106,6 +106,60 @@ const changeInfo = (email, phone, address, name, cb) => {
     });
 };
 
+const getClient = () => (
+    new Promise((resolve, reject) => {
+        pool.connect((err, client, done) => {
+            if (err) return reject(err);
+            resolve({ client, done });
+        });
+    })
+);
+
+const query = (client, sql) => (
+    new Promise((resolve, reject) => {
+        client.query(sql, (err, result) => {
+            if (err) return reject(err);
+            resolve(result);
+        });
+    })
+);
+
+const insertCart = async (email, arrayCart) => {
+    let doneFunction;
+    try {
+        const createBillSQL = `INSERT INTO public."Bill"("emailUser", date, status)
+	        VALUES ('${email}', NOW(), false) RETURNING id;`;
+        const { client, done } = await getClient();
+        doneFunction = done;
+        const billId = (await query(client, createBillSQL)).rows[0].id;
+        const arraySQL = arrayCart.map(e => `INSERT INTO public."BillDetail"("idBill", "idProduct", quantity)
+	        VALUES (${billId}, ${e.idProduct}, ${e.quantity})`);
+        const bigSQL = arraySQL.join(';\n');
+        await query(client, bigSQL);
+        const updateTotalSQL = `UPDATE "Bill" SET total = (
+            SELECT SUM("Product"."price" * "BillDetail".quantity) FROM "BillDetail"
+            INNER JOIN "Product"
+            ON "Product".id = "BillDetail"."idProduct"
+            WHERE "BillDetail"."idBill" = ${billId}
+            )
+            WHERE "id" = ${billId}`;
+        await query(client, updateTotalSQL);
+        done();
+        return true;
+    } catch (e) {
+        console.log(e);
+        if (doneFunction) doneFunction();
+        return false;
+    }
+};
+
 module.exports = { 
-    getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType, changeInfo 
+    getArrProductType, 
+    signIn, 
+    signUp, 
+    getUserInfo, 
+    getTopProduct, 
+    getProductByIdType, 
+    changeInfo, 
+    insertCart 
 };

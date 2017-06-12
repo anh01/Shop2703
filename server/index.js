@@ -1,7 +1,14 @@
 const express = require('express');
 const jsonParser = require('body-parser').json();
 const { 
-    getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType, changeInfo 
+    getArrProductType, 
+    signIn, 
+    signUp, 
+    getUserInfo, 
+    getTopProduct, 
+    getProductByIdType, 
+    changeInfo, 
+    insertCart 
 } = require('./db');
 const { getEmailFromToken, getTokenFromEmail } = require('./jwt');
 
@@ -68,6 +75,14 @@ app.post('/changeInfo', jsonParser, (req, res) => {
             if (errDB) return res.send(errDB.toString());
             res.send('THANH_CONG');
         });
+    });
+});
+
+app.post('/newCart', jsonParser, (req, res) => {
+    const { token, arrayCart } = req.body;
+    getEmailFromToken(token, (err, email) => {
+        insertCart(email, arrayCart)
+        .then(isComplete => res.send(isComplete));
     });
 });
 
