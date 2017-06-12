@@ -81,6 +81,7 @@ app.post('/changeInfo', jsonParser, (req, res) => {
 app.post('/newCart', jsonParser, (req, res) => {
     const { token, arrayCart } = req.body;
     getEmailFromToken(token, (err, email) => {
+        console.log(email, arrayCart);
         insertCart(email, arrayCart)
         .then(isComplete => res.send(isComplete));
     });
