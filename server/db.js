@@ -109,9 +109,3 @@ const changeInfo = (email, phone, address, name, cb) => {
 module.exports = { 
     getArrProductType, signIn, signUp, getUserInfo, getTopProduct, getProductByIdType, changeInfo 
 };
-
-// signUp('asssdafdfs@gmail.com', '123', 'Pho', '92 LTR', '012348217', err => {
-//     console.log(err);
-// });
-
-// signIn('Sasssdafdfs@gmail.com', '123', err => console.log(err));
