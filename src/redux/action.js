@@ -6,6 +6,7 @@ import checkUserState from '../api/checkUserState';
 import getInitTopProduct from '../api/getInitTopProduct';
 import getCart from '../api/getCart';
 import updateInfoAPI from '../api/updateInfo';
+import makeOrderAPI from '../api/makeOrder';
 
 export const initProductType = (arrProductType) => ({ 
     type: 'INIT_PRODUCT_TYPE',
@@ -95,6 +96,17 @@ export const changeInfo = (name, phone, address, onCompleted) => {
         });
     };
     return changeInfoAsync;
+};
+
+export const makeOrder = (arrayCart, cb) => {
+    const makeOrderAsync = (dispatch) => {
+        getToken()
+        .then(token => makeOrderAPI(token, arrayCart))
+        .then(() => dispatch({ type: 'MAKE_ORDER' }))
+        .catch(err => console.log(err))
+        .then(cb);
+    };
+    return makeOrderAsync;
 };
 
 export const removeCartItem = (id) => ({ type: 'REMOVE_PRODUCT', id });

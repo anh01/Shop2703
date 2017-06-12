@@ -4,7 +4,7 @@ import {
     Dimensions, StyleSheet, Image, ListView
 } from 'react-native';
 import { connect } from 'react-redux';
-import { incrQuantityInCart, removeCartItem } from '../../../../redux/action';
+import { incrQuantityInCart, removeCartItem, makeOrder } from '../../../../redux/action';
 import saveCart from '../../../../api/saveCart';
 
 const prefix = 'http://localhost:3000/images/product/';
@@ -14,13 +14,18 @@ function toTitleCase(str) {
 }
 
 class CartView extends Component {
+    componentWillReceiveProps(nextProps) {
+        saveCart(nextProps.cartArray);
+    }
+
     gotoDetail() {
         const { navigator } = this.props;
         navigator.push({ name: 'PRODUCT_DETAIL' });
     }
 
-    componentWillReceiveProps(nextProps) {
-        saveCart(nextProps.cartArray);
+    makeOrder() {
+        const arrayCart = this.props.cartArray;
+        makeOrder(arrayCart, () => console.log('AAAA'));
     }
 
     render() {
@@ -69,7 +74,7 @@ class CartView extends Component {
                         </View>
                     )}
                 />
-                <TouchableOpacity style={checkoutButton}>
+                <TouchableOpacity style={checkoutButton} onPress={() => this.makeOrder()}>
                     <Text style={checkoutTitle}>TOTAL {1000}$ CHECKOUT NOW</Text>
                 </TouchableOpacity>
             </View>
@@ -164,4 +169,4 @@ function mapStateToProps(state) {
     return { cartArray: state.cartArray };
 }
 
-export default connect(mapStateToProps, { incrQuantityInCart, removeCartItem })(CartView);
+export default connect(mapStateToProps, { incrQuantityInCart, removeCartItem, makeOrder })(CartView);
